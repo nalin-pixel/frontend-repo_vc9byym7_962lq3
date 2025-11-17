@@ -1,26 +1,35 @@
 import { useState } from 'react'
+import Navbar from './components/Navbar'
+import Hero from './components/Hero'
+import UploadForm from './components/UploadForm'
+import NotesList from './components/NotesList'
+import './index.css'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [refresh, setRefresh] = useState(0)
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-blue-50 flex items-center justify-center">
-      <div className="bg-white p-8 rounded-lg shadow-lg">
-        <h1 className="text-3xl font-bold text-gray-800 mb-4">
-          Vibe Coding Platform
-        </h1>
-        <p className="text-gray-600 mb-6">
-          Your AI-powered development environment
-        </p>
-        <div className="text-center">
-          <button
-            onClick={() => setCount(count + 1)}
-            className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded"
-          >
-            Count is {count}
-          </button>
+    <div className="min-h-screen bg-slate-50">
+      <Navbar />
+      <Hero />
+
+      <main className="max-w-5xl mx-auto px-4 pb-16 space-y-6 -mt-8">
+        <div className="grid md:grid-cols-2 gap-6">
+          <UploadForm onCreated={() => setRefresh(r=>r+1)} />
+          <div className="bg-white rounded-xl border p-5">
+            <h3 className="font-semibold text-slate-800 mb-2">How it works</h3>
+            <ol className="list-decimal pl-5 text-slate-600 space-y-1 text-sm">
+              <li>Fill in the title and subject. Optionally add branch and semester.</li>
+              <li>Paste your notes content or add a public file link (PDF, DOC, etc.).</li>
+              <li>Click Upload. Your note appears in the list for everyone.</li>
+            </ol>
+          </div>
         </div>
-      </div>
+
+        <NotesList refreshSignal={refresh} />
+      </main>
+
+      <footer className="text-center text-sm text-slate-500 py-10">© {new Date().getFullYear()} EngiNotes</footer>
     </div>
   )
 }
